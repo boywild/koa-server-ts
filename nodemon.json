@@ -1,0 +1,16 @@
+{
+  "verbose": true,
+  "ext": "ts, *",
+  "watch": [
+    "./index.ts"
+  ],
+  "ignore": [
+    "*.test.js",
+    "fixtures/*"
+  ],
+  "exec": "ts-node ./index",
+  "delay": 300,
+  "execMap": {
+    "ts": "node --harmony"
+  }
+}
