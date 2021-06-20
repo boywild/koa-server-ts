@@ -22,7 +22,7 @@ interface RouteMap {
   fn: Function
 }
 
-function mapRoute(instance: { new(...args: any[]): {} }): Array<RouteMap> {
+export function mapRoute<T extends object>(instance: T): Array<RouteMap> {
   const prototype = Object.getPrototypeOf(instance)
   const methodsNames = Object.getOwnPropertyNames(prototype).filter(item => !isConstructor(item) && isFunction(prototype[item]))
   return methodsNames.map(methodName => {

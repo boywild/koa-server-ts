@@ -15,3 +15,4 @@ class Article {
   addArticle() {
   }
 }
+export = Article
