@@ -2,7 +2,7 @@ import { Context } from 'koa'
 import { Controller, Get, Post } from '../decorator/httpMethod'
 
 @Controller('/home')
-class Home {
+export default class Home {
 
   @Get('/banner')
   banner(ctx: Context) {
@@ -19,5 +19,3 @@ class Home {
     ctx.body = '<h1>Post home addAdv</h1>'
   }
 }
-
-export = Home

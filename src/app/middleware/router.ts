@@ -62,7 +62,7 @@ export const addRouter = (app: Koa): void => {
     if (err) return
     files.forEach(ele => {
       //动态加载路由类并实例化
-      const module = require(ele)
+      const module = require(ele).default
       const instance = new module()
       const routes = mapRoute(module)
       routes.forEach((route: RouteMap) => {

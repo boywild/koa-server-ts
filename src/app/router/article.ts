@@ -2,7 +2,7 @@ import { Context } from 'koa'
 import { Controller, Get, Post } from '../decorator/httpMethod'
 
 @Controller('/article')
-class Article {
+export default class Article {
 
   @Get('/list')
   articles(ctx: Context) {
@@ -19,5 +19,3 @@ class Article {
     ctx.body = '<h1>Post article save</h1>'
   }
 }
-
-export = Article
