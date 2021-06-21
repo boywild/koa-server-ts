@@ -20,13 +20,13 @@ class SomeClass {
 
 // Reflect.getMetadata(PATH_METADATA, SomeClass) // '/test'
 
-console.log(mapRoute(new SomeClass()))
+console.log(mapRoute(SomeClass))
 const path = resolve(__dirname, 'app/router/**/*.ts')
 glob(path, (err, files) => {
   if (err) return
   files.forEach(ele => {
     const module = require(ele)
-    console.log(module)
+    console.log(mapRoute(module))
   })
 
 })

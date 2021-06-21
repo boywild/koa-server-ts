@@ -1,8 +1,13 @@
-import * as Router from 'koa-router'
-const router = new Router();
+import { Context } from 'koa'
+import { Controller, Post } from '../../decorator/httpMethod'
 
-router.get("/v1/book/laster33", (ctx, next) => {
-  ctx.body = {key: ctx.path};
-})
+@Controller('/login')
+class Login {
 
-export　= router
+  @Post('/user')
+  userLogin(ctx: Context) {
+    ctx.body = '<h1>Post login user</h1>'
+  }
+}
+
+export = Login
