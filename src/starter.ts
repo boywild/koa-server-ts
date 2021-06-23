@@ -1,11 +1,9 @@
 import { resolve } from 'path'
 import * as Koa from 'koa'
-import * as Router from 'koa-router'
-// import {Application} from 'koa'
 import * as R from 'ramda'
 import { glob } from 'glob'
 import config, { ServerConfig } from './app/config'
-import { addRouter } from './app/middleware/router'
+import logger from './app/utils/log4js'
 
 class Server {
   private app: Koa
@@ -20,7 +18,7 @@ class Server {
   async start() {
     const { port, host } = this.config
     await this.app.listen(port, host, () => {
-      console.log(`server listen at ${host}:${port}`)
+      logger.info(`server listen at ${host}:${port}`)
     })
   }
 
@@ -30,7 +28,7 @@ class Server {
       if (files.length) {
         R.map(R.compose(
           R.map((module: Function) => {
-            console.log(`setting middleware ${module.name}`)
+            logger.info(`setting middleware ${module.name}`)
             return module(app)
           }),
           (file: string) => require(file)
