@@ -31,7 +31,7 @@ function isFunction(fn: Function): boolean {
  * @param {object class} instance 路由class类
  * @return RouteMap 返回映射数组
  */
-export function mapRoute<T extends { new(...arg: any[]): any }>(instance: T): Array<RouteMap> {
+function mapRoute<T extends { new(...arg: any[]): any }>(instance: T): Array<RouteMap> {
   const controller = Reflect.getMetadata(PATH_METADATA, instance)
   const newInstance = new instance()
   const prototype = Object.getPrototypeOf(newInstance)

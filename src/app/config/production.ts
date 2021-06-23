@@ -3,7 +3,7 @@ export default {
   host: 'localhost',
   mongodb: {
     host: 'localhost',
-    port: 3306,
+    port: 27017,
     name: 'fire'
   }
 }
