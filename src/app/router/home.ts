@@ -6,7 +6,9 @@ export default class Home {
 
   @Get('/banner')
   banner(ctx: Context) {
+
     ctx.body = '<h1>Get home banner</h1>'
+    console.log(ctx.response)
   }
 
   @Get('/adv')
