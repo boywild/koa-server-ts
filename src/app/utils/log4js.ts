@@ -31,3 +31,5 @@ configure({
 
 const logger = getLogger()
 export default logger
+
+export const accessLogger = getLogger('access')
