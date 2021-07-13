@@ -1,5 +1,5 @@
 import * as Koa from 'koa'
-import { Context, Middleware } from 'koa'
+import { Context, ExtendableContext, Middleware } from 'koa'
 import { Logger, levels, Level } from 'log4js'
 import { accessLogger } from '../utils/log4js'
 
@@ -21,26 +21,28 @@ const DEFAULT_LEVEL_MAPPER = (code: number): Level => {
   return level
 }
 type NoLog = string | RegExp | Array<string | RegExp>
-type OutgoingHttpHeader = number | string | string[];
+
+// type OutgoingHttpHeader = number | string | string[];
+type CallBack = (str: string) => string
 
 interface LogObjectOptions {
   level: string
-  format?: string | Function
+  format?: (ctx: ExtendableContext, callback: CallBack) => string | string
   nolog?: NoLog
   tokens?: Array<Token>
-  levelMapper?: Function
+  levelMapper?: (code: number) => Level
 }
 
 interface LogStringOptions {
   format: string
 }
 
-type LogOptions = LogObjectOptions | LogStringOptions | {}
+type LogOptions = LogObjectOptions | LogStringOptions | Record<string, unknown>
 
 interface Token {
   token: string | RegExp
-  replacement: string | Function
-  component?: Function
+  replacement: (match: string, field: string) => string | string
+  component?: (match: string, field: string) => string
 }
 
 function getLogger(log4js: Logger, options: LogOptions): Middleware {
@@ -181,7 +183,7 @@ function convertHead(str: string, type: 'toLowerCase' | 'toUpperCase') {
  */
 function format(str: string, tokens: Array<Token>): string {
   tokens.forEach(token => {
-    str = str.replace(token.token, <string>token.replacement)
+    str = str.replace(token.token, token.replacement)
   })
   return str
 }

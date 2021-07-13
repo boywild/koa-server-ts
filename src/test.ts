@@ -1,12 +1,12 @@
-import 'reflect-metadata'
-import * as Koa from 'koa'
-import * as Router from 'koa-router'
-import { Controller, Get, Post } from './app/decorator/httpMethod'
+// import 'reflect-metadata'
+// import * as Koa from 'koa'
+// import * as Router from 'koa-router'
+// import { Controller, Get, Post } from './app/decorator/httpMethod'
 // import { mapRoute } from './app/middleware/router'
-import { glob } from 'glob'
-import { resolve } from 'path'
+// import { glob } from 'glob'
+// import { resolve } from 'path'
 // import { configure, getLogger } from 'log4js'
-import * as path from 'path'
+// import * as path from 'path'
 // import logger from '@/app/utils/log4js'
 
 // @Controller('/test')
@@ -81,7 +81,4 @@ import * as path from 'path'
 // app.listen(2001, 'localhost', () => {
 //   console.log(`server listen at localhost:2000`)
 // })
-'$remote-addr $method $status $url $query $params $res[cache-control]'.replace( /\$res\[(.*)\]/g, function(m: string, f: string): string {
-  console.log('===', f)
-  return ''
-})
+

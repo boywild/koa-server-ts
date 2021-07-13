@@ -1,9 +1,9 @@
-import * as Koa from 'koa'
+// import * as Koa from 'koa'
 import * as mongoose from 'mongoose'
 import config from '../config'
 import logger from '../utils/log4js'
 
-export const database = (app: Koa): void => {
+export const database = (): void => {
   const uri = `mongodb://${config.mongodb.host}:${config.mongodb.port}/${config.mongodb.name}`
   mongoose.set('debug', true)
   mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })

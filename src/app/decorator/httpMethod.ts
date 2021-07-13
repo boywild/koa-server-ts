@@ -21,7 +21,7 @@ function normalizePath(path: string): string {
 const createMethodDecorator = (method: string) => {
   return function httpMethodDecorator(path: string, isVerify?: boolean): MethodDecorator {
     path = normalizePath(path)
-    return function(target, propertyKey, descriptor) {
+    return function(target, propertyKey) {
       Reflect.defineMetadata(PATH_METADATA, path, target, propertyKey)
       Reflect.defineMetadata(METHOD_METADATA, method, target, propertyKey)
     }

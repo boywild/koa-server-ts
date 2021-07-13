@@ -27,7 +27,7 @@ class Server {
     glob(middlewarePath, (err, files) => {
       if (files.length) {
         R.map(R.compose(
-          R.map((module: Function) => {
+          R.map((module: (app: Koa) => any) => {
             logger.info(`setting middleware ${module.name}`)
             return module(app)
           }),
@@ -39,4 +39,4 @@ class Server {
 }
 
 const app = new Server()
-app.start()
+void app.start()

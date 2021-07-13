@@ -6,6 +6,7 @@
   ],
   "ignore": [
     "*.test.js",
+    "*.test.ts",
     "fixtures/*"
   ],
   "exec": "ts-node ./index",

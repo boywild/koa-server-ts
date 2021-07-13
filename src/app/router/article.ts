@@ -5,17 +5,17 @@ import { Controller, Get, Post } from '../decorator/httpMethod'
 export default class Article {
 
   @Get('/list')
-  articles(ctx: Context) {
+  articles(ctx: Context): void {
     ctx.body = '<h1>Get article list</h1>'
   }
 
   @Get('detail')
-  article(ctx: Context) {
+  article(ctx: Context): void {
     ctx.body = '<h1>Get article detail</h1>'
   }
 
   @Post('/save')
-  addArticle(ctx: Context) {
+  addArticle(ctx: Context): void {
     ctx.body = '<h1>Post article save</h1>'
   }
 }
