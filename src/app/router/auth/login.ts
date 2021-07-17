@@ -5,7 +5,7 @@ import { Controller, Post } from '../../decorator/httpMethod'
 export default class Login {
 
   @Post('/user')
-  userLogin(ctx: Context) {
+  userLogin(ctx: Context): void {
     ctx.body = '<h1>Post login user</h1>'
   }
 }

@@ -22,7 +22,7 @@ function isConstructor(name: string): boolean {
  * @param {function} fn prototype上的方法
  * @return {boolean} 是函数类型返回true否则返回false
  */
-function isFunction(fn: Function): boolean {
+function isFunction(fn: () => any): boolean {
   return Object.prototype.toString.call(fn) === '[object Function]'
 }
 

@@ -6,7 +6,7 @@ interface RouteMap {
   path: string
   method: Method
   methodName: string
-  fn: Function
+  fn: () => any
 }
 
 export {
