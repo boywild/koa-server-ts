@@ -1,6 +1,6 @@
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV || 'development'
 
-const envConfig: EnvConfig = require(`./${env}`).default
+const envConfig = <EnvConfig>require(`./${env}`).default
 
 export interface EnvConfig {
   port: number,

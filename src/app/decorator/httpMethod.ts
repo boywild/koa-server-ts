@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import { Method } from '../type/type'
 
 export const METHOD_METADATA = Symbol('method')
 export const PATH_METADATA = Symbol('path')
@@ -18,8 +19,8 @@ function normalizePath(path: string): string {
  * @param {string} method http请求方法GET/POST等
  * @return MethodDecorator 返回方法装饰器
  */
-const createMethodDecorator = (method: string) => {
-  return function httpMethodDecorator(path: string, isVerify?: boolean): MethodDecorator {
+const createMethodDecorator = (method: Method) => {
+  return function httpMethodDecorator(path: string): MethodDecorator {
     path = normalizePath(path)
     return function(target, propertyKey) {
       Reflect.defineMetadata(PATH_METADATA, path, target, propertyKey)

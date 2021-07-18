@@ -6,16 +6,16 @@ import logger from '../utils/log4js'
 export const database = (): void => {
   const uri = `mongodb://${config.mongodb.host}:${config.mongodb.port}/${config.mongodb.name}`
   mongoose.set('debug', true)
-  mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  mongoose.connection.on('open', async () => {
-    await logger.info('Connected to MongoDB')
+  void mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  mongoose.connection.on('open',  () => {
+    logger.info('Connected to MongoDB')
   })
-  mongoose.connection.on('error', async (error) => {
-    await logger.error(error)
+  mongoose.connection.on('error',  (error) => {
+    logger.error(error)
   })
-  mongoose.connection.on('disconnected', async () => {
+  mongoose.connection.on('disconnected',  () => {
     try {
-      await mongoose.connect(uri)
+      void mongoose.connect(uri)
     } catch (e) {
       logger.error(e)
       process.exit(-1)

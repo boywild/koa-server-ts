@@ -1,5 +1,5 @@
 import * as Koa from 'koa'
-import { Context, ExtendableContext, Middleware } from 'koa'
+import { Context, ExtendableContext, Middleware,Response } from 'koa'
 import { Logger, levels, Level } from 'log4js'
 import { accessLogger } from '../utils/log4js'
 
@@ -45,12 +45,16 @@ interface Token {
   component?: (match: string, field: string) => string
 }
 
+interface CtxResponse extends Response{
+  _logging?:boolean,
+  responseTime?:number
+  _headers?:Record<string, unknown>
+}
+
 function getLogger(log4js: Logger, options: LogOptions): Middleware {
-  if (typeof options === 'object') {
-    options = options
-  } else if (typeof options === 'string') {
+  if (typeof options === 'string') {
     options = { format: options }
-  } else {
+  } else if (!options) {
     options = {}
   }
   const logger = log4js
@@ -61,7 +65,7 @@ function getLogger(log4js: Logger, options: LogOptions): Middleware {
   const levelMapper = (<LogObjectOptions>options).levelMapper || DEFAULT_LEVEL_MAPPER
 
   return async function(ctx, next) {
-    const ctxResponse = ctx.response as any
+    const ctxResponse:CtxResponse = ctx.response
 
     if (ctxResponse._logging) {
       await next()
@@ -107,7 +111,7 @@ function assembleTokens(ctx: Context, customTokens: Token[]): Array<Token> {
     }
     return arr
   }
-  const ctxResponse = ctx.response as any
+  const ctxResponse:CtxResponse = ctx.response
   const defaultTokens = []
   defaultTokens.push({ token: '$date', replacement: new Date().toUTCString() })
 
@@ -125,12 +129,14 @@ function assembleTokens(ctx: Context, customTokens: Token[]): Array<Token> {
   defaultTokens.push({ token: '$status', replacement: ctx.response.status || ctx.res.statusCode })
   defaultTokens.push({
     token: '$remote-addr',
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
     replacement: ctx.ip || ctx.ips || ctx.headers['X-Forwarded-For'] || ctx.headers['x-forwarded-for'] || (ctx.socket && (ctx.socket.remoteAddress || ((<any>ctx.socket).socket && (<any>ctx.socket).socket.remoteAddress)))
   })
 
   //header
   defaultTokens.push({
     token: '$content-length',
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     replacement: (ctxResponse._headers && ctxResponse._headers['content-length']) || ctx.response.length || '-'
   })
   defaultTokens.push({ token: '$referrer', replacement: ctx.headers['referer'] || '' })
@@ -213,13 +219,13 @@ function createNoLogCondition(nolog: NoLog | undefined): RegExp | null {
     reg = new RegExp(nolog)
   }
   if (Array.isArray(nolog)) {
-    let regexpsAsStrings = nolog.map((item) => (<RegExp>item).source ? (<RegExp>item).source : item)
+    const regexpsAsStrings = nolog.map((item) => (<RegExp>item).source ? (<RegExp>item).source : item)
     reg = new RegExp(regexpsAsStrings.join('|'))
   }
   return reg
 }
 
-export const logger = (app: Koa) => {
+export const logger = (app: Koa): void => {
   app.use(getLogger(accessLogger, {
     level: 'auto',
     format: '$remote-addr $method $status $url $query $params $res[cache-control]'
