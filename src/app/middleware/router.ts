@@ -39,7 +39,7 @@ function mapRoute<T extends { new(...arg: any[]): any }>(instance: T): Array<Rou
   const newInstance = <ObjectConstructor>new instance()
   const prototype = <Record<string, RouteFunction>>Object.getPrototypeOf(newInstance)
   const methodsNames = Object.getOwnPropertyNames(prototype).filter(item => !isConstructor(item) && isFunction(prototype[item]))
-  const test = methodsNames.map((methodName: string): RouteMap => {
+  const routes = methodsNames.map((methodName: string): RouteMap => {
     const fn = prototype[methodName]
     const route = <string>Reflect.getMetadata(PATH_METADATA, newInstance, methodName)
     const method: Method = <Method>Reflect.getMetadata(METHOD_METADATA, newInstance, methodName)
@@ -52,7 +52,7 @@ function mapRoute<T extends { new(...arg: any[]): any }>(instance: T): Array<Rou
       fn
     }
   })
-  return test
+  return routes
 }
 
 /**
