@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { Method } from '../type/type'
+import { Method } from '../types/type'
 
 export const METHOD_METADATA = Symbol('method')
 export const PATH_METADATA = Symbol('path')
