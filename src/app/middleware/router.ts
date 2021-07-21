@@ -3,7 +3,7 @@ import 'reflect-metadata'
 import * as Koa from 'koa'
 import * as Router from 'koa-router'
 import { METHOD_METADATA, PATH_METADATA } from '../decorator/httpMethod'
-import { RouteMap, Method, Method2 } from '../types/type'
+import { RouteMap, Method, Method2 } from '../types'
 import { glob } from 'glob'
 
 const router = new Router()
