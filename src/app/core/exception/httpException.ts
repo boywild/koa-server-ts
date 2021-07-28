@@ -1,6 +1,6 @@
 import { Exception } from '../../types'
 
-class HttpException extends Error {
+export default class HttpException extends Error {
   public status = 500
   public code = 9999
   public message = ''
