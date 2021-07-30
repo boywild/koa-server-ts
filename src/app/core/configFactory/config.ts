@@ -8,11 +8,11 @@ export default class Config {
   private envSuffix = '_ENV'
   private baseDir = process.cwd()
 
-  public init(baseDir: string = process.cwd()) {
+  public init(baseDir: string = process.cwd()): void {
     this.baseDir = baseDir
   }
 
-  public getItem(key: string): string | number {
+  public getItem(key: string): string | number | unknown {
     return get(this.store, key, '')
   }
 
@@ -26,9 +26,10 @@ export default class Config {
 
   public getConfigFromFile(filePath: string | Array<string>): void {
     const setStore = (path: string) => {
-      const conf = require(resolve(this.baseDir, path)).default || {}
+      const conf = <Record<string, unknown>>require(resolve(this.baseDir, path)).default || {}
       this.store = merge(this.store, conf)
     }
+
     if (typeof filePath === 'string') {
       setStore(filePath)
     } else {
