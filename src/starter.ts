@@ -2,15 +2,16 @@ import { resolve } from 'path'
 import * as Koa from 'koa'
 import * as R from 'ramda'
 import { glob } from 'glob'
-import config from './app/config'
-import Config from './app/core/configFactory'
+// import config from './app/config'
+import config from './app/core/configFactory'
 import logger from './app/utils/log4js'
+import { CoreConfigFactory } from './app/types'
 
 type ApiMiddleWare = (app: Koa) => unknown
 
 class Server {
   private app: Koa
-  private readonly config: Config
+  private readonly config: CoreConfigFactory
 
   constructor() {
     this.app = new Koa()

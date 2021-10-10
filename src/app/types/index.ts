@@ -15,18 +15,38 @@ export interface Exception {
   message: string
 }
 
-export interface EnvConfig {
+export interface Setting {
   port: number,
   host: string,
-  mongodb: DataBaseConfig
+  mongodb: DataBaseMongodb
 }
 
-export interface DataBaseConfig {
+export interface DataBaseMongodb {
   host: string,
   port: number,
   name: string
 }
 
-export interface ServerConfig extends EnvConfig {
+export interface ServerConfig extends Setting {
   env: string
+}
+
+export interface CoreConfigFactory<T> {
+  new(): T
+
+  _prefix: string,
+  _suffix: string,
+  baseDir: string,
+  setBaseDir: (baseDir: string) => void,
+  getItem: (key: string) => string | number | unknown | Record<string, unknown>,
+  getAll: () => Record<string, string | number>,
+  setItem: (key: string, value: unknown) => void,
+  hasItem: (key: string) => boolean,
+  getConfigFromFile: (filePath: string | Array<string>) => void,
+  getConfigFromObj: (obj: Record<string, unknown>) => void,
+  getConfigFromEnv: () => void,
+  getEnv: () => string,
+  isDebug: () => boolean,
+  prefix: (value: string) => void,
+  suffix: (value: string) => void,
 }

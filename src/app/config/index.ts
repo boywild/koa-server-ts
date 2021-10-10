@@ -1,9 +1,10 @@
 import { resolve } from 'path'
 import Config from '../core/configFactory'
+import { CoreConfigFactory } from '../types'
 
 //TODO 自动加载config目录下相关文件
-function initConfig(): Config {
-  const config = new Config()
+function initConfig(): CoreConfigFactory<Config> {
+  const config: CoreConfigFactory<Config> = new Config()
   config.getConfigFromEnv()
   const env = config.getEnv()
   const envFile = resolve(__dirname, `./app/config/${env}.ts`)

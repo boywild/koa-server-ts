@@ -1,6 +1,6 @@
-import { EnvConfig } from '../types/index'
+import { Setting } from '../types/index'
 
-const development: EnvConfig = {
+const development: Setting = {
   port: 2000,
   host: 'localhost',
   mongodb: {

@@ -1,6 +1,6 @@
-import { EnvConfig } from '../types/index'
+import { Setting } from '../types/index'
 
-const production: EnvConfig = {
+const production: Setting = {
   port: 3000,
   host: 'localhost',
   mongodb: {
