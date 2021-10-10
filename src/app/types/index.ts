@@ -14,3 +14,19 @@ export interface Exception {
   code: number
   message: string
 }
+
+export interface EnvConfig {
+  port: number,
+  host: string,
+  mongodb: DataBaseConfig
+}
+
+export interface DataBaseConfig {
+  host: string,
+  port: number,
+  name: string
+}
+
+export interface ServerConfig extends EnvConfig {
+  env: string
+}

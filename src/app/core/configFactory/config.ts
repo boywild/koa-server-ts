@@ -1,19 +1,34 @@
-import { resolve } from 'path'
 import { get, has, merge, set } from 'lodash'
 
 export default class Config {
   private store = {}
 
-  private _prefix = 'lin'
-  private envSuffix = '_ENV'
-  private baseDir = process.cwd()
+  private _prefix: string
+  private envSuffix: string
+  private envKey: string
+  private baseDir: string
 
-  public init(baseDir: string = process.cwd()): void {
+  constructor() {
+    this._prefix = 'NODE'
+    this.envSuffix = 'NODE'
+    this.envKey = 'NODE'
+    this.baseDir = process.cwd()
+  }
+
+  public setBaseDir(baseDir: string = process.cwd()): void {
     this.baseDir = baseDir
   }
 
-  public getItem(key: string): string | number | unknown {
-    return get(this.store, key, '')
+  public getItem(key = ''): string | number | unknown | Record<string, unknown> {
+    if (key) {
+      return get(this.store, key, '')
+    } else {
+      return this.store
+    }
+  }
+
+  public getAll(): Record<string, string | number> {
+    return this.store
   }
 
   public setItem(key: string, value: unknown): void {
@@ -26,7 +41,8 @@ export default class Config {
 
   public getConfigFromFile(filePath: string | Array<string>): void {
     const setStore = (path: string) => {
-      const conf = <Record<string, unknown>>require(resolve(this.baseDir, path)).default || {}
+      const conf = <Record<string, unknown>>require(path).default || {}
+      console.log(conf)
       this.store = merge(this.store, conf)
     }
 
@@ -46,13 +62,13 @@ export default class Config {
   public getConfigFromEnv(): void {
     const envKeys = Object.keys(process.env)
     const envs = {
-      [this.prefix + this.envSuffix]: 'debug'
+      [this.envKey]: 'debug'
     }
     envKeys.forEach((key) => {
       if (key.startsWith(this.prefix + this.envSuffix)) {
         const parts = key.split('_')
         if (parts.length === 2) {
-          set(envs, parts[1], process.env[key])
+          set(envs, this.envKey, process.env[key])
         } else if (parts.length > 2) {
           let k = key.replace(`${this.prefix}_`, '')
           k = k.replace('_', '.')
@@ -65,7 +81,7 @@ export default class Config {
   }
 
   public getEnv(): string {
-    const env = this.getItem(this._prefix + this.envSuffix)
+    const env = this.getItem(this.envKey)
     if (typeof env === 'string') {
       return env.toLowerCase()
     } else {

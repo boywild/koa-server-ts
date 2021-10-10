@@ -1,26 +1,16 @@
-const env = process.env.NODE_ENV || 'development'
+import { resolve } from 'path'
+import Config from '../core/configFactory'
 
-const envConfig = <EnvConfig>require(`./${env}`).default
-
-export interface EnvConfig {
-  port: number,
-  host: string,
-  mongodb: DataBaseConfig
+//TODO 自动加载config目录下相关文件
+function initConfig(): Config {
+  const config = new Config()
+  config.getConfigFromEnv()
+  const env = config.getEnv()
+  const envFile = resolve(__dirname, `./app/config/${env}.ts`)
+  const message = resolve(__dirname, './app/config/message.ts')
+  config.getConfigFromFile(envFile)
+  config.getConfigFromFile(message)
+  return config
 }
 
-export interface DataBaseConfig {
-  host: string,
-  port: number,
-  name: string
-}
-
-export interface ServerConfig extends EnvConfig {
-  env: string
-}
-
-const serverConfig = <ServerConfig>{
-  env
-}
-
-const config = <ServerConfig>Object.assign(serverConfig, envConfig)
-export default config
+export default initConfig()

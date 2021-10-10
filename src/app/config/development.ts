@@ -1,4 +1,6 @@
-export default {
+import { EnvConfig } from '../types/index'
+
+const development: EnvConfig = {
   port: 2000,
   host: 'localhost',
   mongodb: {
@@ -7,3 +9,4 @@ export default {
     name: 'fire'
   }
 }
+export default development

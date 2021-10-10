@@ -2,14 +2,15 @@ import { resolve } from 'path'
 import * as Koa from 'koa'
 import * as R from 'ramda'
 import { glob } from 'glob'
-import config, { ServerConfig } from './app/config'
+import config from './app/config'
+import Config from './app/core/configFactory'
 import logger from './app/utils/log4js'
 
 type ApiMiddleWare = (app: Koa) => unknown
 
 class Server {
   private app: Koa
-  private readonly config: ServerConfig
+  private readonly config: Config
 
   constructor() {
     this.app = new Koa()
@@ -18,8 +19,8 @@ class Server {
   }
 
   async start() {
-    const { port, host } = this.config
-    await this.app.listen(port, host, () => {
+    const { port, host } = this.config.getAll()
+    await this.app.listen(port, <number>host, () => {
       logger.info(`server listen at ${host}:${port}`)
     })
   }
@@ -34,7 +35,7 @@ class Server {
             return module(app)
           }),
           // eslint-disable-next-line @typescript-eslint/no-var-requires
-          (file: string):ApiMiddleWare[] => <ApiMiddleWare[]>require(file)
+          (file: string): ApiMiddleWare[] => <ApiMiddleWare[]>require(file)
         ))(files)
       }
     })

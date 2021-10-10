@@ -1,4 +1,5 @@
-const codeMessage: Record<number, string> = {
+type fun = (code: number) => string
+const codeMessage: Record<number | string, string | fun> = {
   0: '成功',
   1: '创建成功',
   2: '更新成功',
@@ -71,12 +72,12 @@ const codeMessage: Record<number, string> = {
   10231: '无法分配不存在的权限',
   10240: '书籍已存在',
   10250: '请使用正确类型的令牌',
-  10251: '请使用正确作用域的令牌'
+  10251: '请使用正确作用域的令牌',
+  getMessage: function(code: number): string {
+    return <string>this[code] || ''
+  }
 }
 
-function getMessage(code: number): string {
-  return codeMessage[code] || ''
-}
 
-export default getMessage
+export default codeMessage
 
