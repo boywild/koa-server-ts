@@ -11,11 +11,10 @@ type ApiMiddleWare = (app: Koa) => unknown
 
 class Server {
   private app: Koa
-  private readonly config: CoreConfigFactory
+  private readonly config = config
 
   constructor() {
     this.app = new Koa()
-    this.config = config
     this.useMiddleware(this.app)
   }
 

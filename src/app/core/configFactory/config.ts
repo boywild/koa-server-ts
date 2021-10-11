@@ -1,12 +1,12 @@
 import { get, has, merge, set } from 'lodash'
+import { AllSetting, CoreConfigFactory } from '../../types'
 
-export default class Config {
+export default class Config implements CoreConfigFactory {
   /**
    * 读取的配置信息都会合并到store中存储
    * @private
    */
-  private store = {}
-
+  private store: AllSetting
   private _prefix: string
   private _suffix: string
   private baseDir: string
@@ -15,6 +15,16 @@ export default class Config {
     this._prefix = 'NODE'
     this._suffix = '_ENV'
     this.baseDir = process.cwd()
+    //默认
+    this.store = {
+      port: 8080,
+      host: 'localhost',
+      mongodb: {
+        host: 'localhost',
+        port: 27017,
+        name: 'fire'
+      }
+    }
   }
 
   public setBaseDir(baseDir: string = process.cwd()): void {
@@ -33,7 +43,7 @@ export default class Config {
     }
   }
 
-  public getAll(): Record<string, string | number> {
+  public getAll(): AllSetting {
     return this.store
   }
 

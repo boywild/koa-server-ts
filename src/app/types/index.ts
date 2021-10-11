@@ -16,9 +16,9 @@ export interface Exception {
 }
 
 export interface Setting {
-  port: number,
-  host: string,
-  mongodb: DataBaseMongodb
+  port?: number,
+  host?: string,
+  mongodb?: DataBaseMongodb
 }
 
 export interface DataBaseMongodb {
@@ -27,13 +27,14 @@ export interface DataBaseMongodb {
   name: string
 }
 
-export interface ServerConfig extends Setting {
-  env: string
+export interface AnyConfig {
+  [key: string]: string
 }
 
-export interface CoreConfigFactory<T> {
-  new(): T
+export type AllSetting = Setting | AnyConfig
 
+export interface CoreConfigFactory {
+  store: AllSetting,
   _prefix: string,
   _suffix: string,
   baseDir: string,
