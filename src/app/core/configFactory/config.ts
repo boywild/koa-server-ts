@@ -78,7 +78,7 @@ export default class Config implements CoreConfigFactory {
     if (typeof filePath === 'string') {
       setStore(filePath)
     } else {
-      filePath.forEach(path => {
+      filePath.forEach((path) => {
         setStore(path)
       })
     }
@@ -157,6 +157,4 @@ export default class Config implements CoreConfigFactory {
   public get suffix(): string {
     return this._suffix
   }
-
-
 }

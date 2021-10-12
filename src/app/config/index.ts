@@ -1,6 +1,6 @@
 import { resolve } from 'path'
 import Config from '../core/configFactory'
-import { CoreConfigFactory } from '../types'
+// import { CoreConfigFactory } from '../types'
 
 //TODO 自动加载config目录下相关文件
 function initConfig() {

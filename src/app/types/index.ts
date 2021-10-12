@@ -16,14 +16,14 @@ export interface Exception {
 }
 
 export interface Setting {
-  port?: number,
-  host?: string,
-  mongodb?: DataBaseMongodb
+  port: number
+  host: string
+  mongodb: DataBaseMongodb
 }
 
 export interface DataBaseMongodb {
-  host: string,
-  port: number,
+  host: string
+  port: number
   name: string
 }
 
@@ -34,20 +34,20 @@ export interface AnyConfig {
 export type AllSetting = Setting | AnyConfig
 
 export interface CoreConfigFactory {
-  store: AllSetting,
-  _prefix: string,
-  _suffix: string,
-  baseDir: string,
-  setBaseDir: (baseDir: string) => void,
-  getItem: (key: string) => string | number | unknown | Record<string, unknown>,
-  getAll: () => Record<string, string | number>,
-  setItem: (key: string, value: unknown) => void,
-  hasItem: (key: string) => boolean,
-  getConfigFromFile: (filePath: string | Array<string>) => void,
-  getConfigFromObj: (obj: Record<string, unknown>) => void,
-  getConfigFromEnv: () => void,
-  getEnv: () => string,
-  isDebug: () => boolean,
-  prefix: (value: string) => void,
-  suffix: (value: string) => void,
+  // store: AllSetting
+  // _prefix: string
+  // _suffix: string
+  // baseDir: string
+  setBaseDir(baseDir: string): void
+  getItem(key: string): string | number | unknown | Record<string, unknown>
+  getAll(): AllSetting
+  setItem(key: string, value: unknown): void
+  hasItem(key: string): boolean
+  getConfigFromFile(filePath: string | Array<string>): void
+  getConfigFromObj(obj: Record<string, unknown>): void
+  getConfigFromEnv(): void
+  getEnv(): string
+  isDebug(): boolean
+  prefix: string
+  suffix: string
 }
