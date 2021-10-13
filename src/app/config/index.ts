@@ -7,8 +7,8 @@ function initConfig() {
   const config = new Config()
   config.getConfigFromEnv()
   const env = config.getEnv()
-  const envFile = resolve(__dirname, `./app/config/${env}.ts`)
-  const message = resolve(__dirname, './app/config/message.ts')
+  const envFile = resolve(__dirname, `./${env}.ts`)
+  const message = resolve(__dirname, './message.ts')
   config.getConfigFromFile(envFile)
   config.getConfigFromFile(message)
   return config

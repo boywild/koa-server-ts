@@ -18,8 +18,12 @@ class Server {
     this.useMiddleware(this.app)
   }
 
+  /**
+   * 启动项目
+   */
   async start() {
     const { port, host } = this.config.getAll()
+    console.log(this.config.getAll())
     await this.app.listen(<number>port, host, () => {
       logger.info(`server listen at ${host}:${port}`)
     })

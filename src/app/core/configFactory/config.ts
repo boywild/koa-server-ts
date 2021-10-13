@@ -98,7 +98,7 @@ export default class Config implements CoreConfigFactory {
   public getConfigFromEnv(): void {
     const envKeys = Object.keys(process.env)
     const envs = {
-      [this.prefix + this.suffix]: 'debug'
+      [this.prefix + this.suffix]: 'development'
     }
     envKeys.forEach((key) => {
       if (key.startsWith(this.prefix + this.suffix)) {
